@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Noto+Serif+TC:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* 阿爸的芋圓 — 淺色暖調主題 */
+    --background: 32 35% 96%;       /* 奶油白 #F7F2EB */
+    --foreground: 30 12% 12%;       /* 深褐色 #1F1B18 */
+    --card: 0 0% 100%;              /* 白色 */
+    --card-foreground: 30 12% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 30 12% 12%;
+    --primary: 35 40% 45%;          /* 駝色 */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 32 25% 92%;
+    --secondary-foreground: 30 12% 12%;
+    --muted: 32 20% 90%;
+    --muted-foreground: 30 10% 45%;
+    --accent: 35 40% 45%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 32 15% 88%;
+    --input: 32 15% 88%;
+    --ring: 35 40% 45%;
+    --radius: 0.75rem;
+
+    /* 品牌色 */
+    --camel: 35 40% 45%;            /* 駝色主色 */
+    --camel-light: 35 35% 55%;     /* 淺駝 */
+    --camel-dark: 35 45% 35%;      /* 深駝 */
+    --dark-brown: 30 12% 12%;      /* 深褐色 */
+    --cream: 32 35% 96%;           /* 奶油白 */
+    --cream-text: 30 15% 95%;      /* 米白文字（用於深色區塊） */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Noto Serif TC', serif;
+    font-weight: 600;
+  }
+}
+
+@layer utilities {
+  .text-gradient-camel {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(var(--camel-light)) 0%, hsl(var(--camel)) 50%, hsl(var(--camel-dark)) 100%);
+  }
+
+  .bg-gradient-camel {
+    background: linear-gradient(135deg, hsl(var(--camel-light)) 0%, hsl(var(--camel)) 50%, hsl(var(--camel-dark)) 100%);
+  }
+
+  .glow-camel {
+    box-shadow: 0 0 30px rgba(160, 128, 80, 0.2), 0 0 60px rgba(160, 128, 80, 0.08);
+  }
+
+  /* 深色區塊背景（用於 Footer、菜單等特定深色區塊） */
+  .bg-section-dark {
+    background-color: hsl(30, 12%, 12%);
+    background-image:
+      radial-gradient(ellipse at 20% 30%, rgba(160, 128, 80, 0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 70%, rgba(160, 128, 80, 0.04) 0%, transparent 50%);
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+
+  .delay-100 { animation-delay: 0.1s; }
+  .delay-200 { animation-delay: 0.2s; }
+  .delay-300 { animation-delay: 0.3s; }
+  .delay-400 { animation-delay: 0.4s; }
+  .delay-500 { animation-delay: 0.5s; }
+  .delay-600 { animation-delay: 0.6s; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--cream));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--camel-dark));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--camel));
+}
+
+::selection {
+  background: rgba(160, 128, 80, 0.25);
+  color: hsl(var(--foreground));
+}
