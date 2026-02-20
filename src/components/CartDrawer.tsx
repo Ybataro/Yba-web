@@ -24,7 +24,7 @@ export default function CartDrawer() {
       />
 
       {/* 側邊面板 */}
-      <div className="fixed top-0 right-0 h-full w-full max-w-md bg-white border-l border-[hsl(var(--camel))]/10 z-[70] flex flex-col shadow-2xl">
+      <div className="fixed top-0 right-0 h-full w-full max-w-md bg-[hsl(25,10%,92%)] border-l border-[hsl(var(--camel))]/10 z-[70] flex flex-col shadow-2xl">
         {/* 標題 */}
         <div className="flex items-center justify-between p-5 border-b border-[hsl(var(--camel))]/10">
           <div className="flex items-center gap-3">

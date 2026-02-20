@@ -1,17 +1,19 @@
 import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ShoppingCart } from 'lucide-react';
+import { useFrozenCartStore } from '@/stores/frozenCartStore';
 
 const navItems = [
-  { label: '品牌故事', href: '#brand-story' },
   { label: '招牌產品', href: '#products' },
-  { label: '美味瞬間', href: '#gallery' },
-  { label: '冷凍宅配', href: '#frozen-products' },
+  { label: '線上選購', href: '#frozen-shop' },
+  { label: '品牌故事', href: '#brand-story' },
   { label: '門市資訊', href: '#stores' },
 ];
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { totalItems, setCartOpen } = useFrozenCartStore();
+  const count = totalItems();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,8 +35,8 @@ export default function Navigation() {
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled
-            ? 'bg-white/95 backdrop-blur-xl border-b border-[hsl(var(--camel))]/15 shadow-[0_2px_20px_rgba(0,0,0,0.06)]'
-            : 'bg-white/60 backdrop-blur-md'
+            ? 'bg-[hsl(25,10%,88%)]/95 backdrop-blur-xl border-b border-[hsl(var(--amber))]/15 shadow-[0_2px_20px_rgba(0,0,0,0.06)]'
+            : 'bg-transparent'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -48,8 +50,12 @@ export default function Navigation() {
               }}
               className="flex items-center gap-2"
             >
-              <span className="text-xl sm:text-2xl font-bold text-[hsl(var(--dark-brown))]">
-                阿爸的<span className="text-[hsl(var(--camel))]">芋圓</span>
+              <span className={`text-xl sm:text-2xl font-bold transition-colors duration-500 ${
+                isScrolled ? 'text-[hsl(var(--dark-brown))]' : 'text-white'
+              }`}>
+                阿爸的<span className={`transition-colors duration-500 ${
+                  isScrolled ? 'text-[hsl(var(--amber))]' : 'text-[hsl(var(--amber-light))]'
+                }`}>芋圓</span>
               </span>
             </a>
 
@@ -59,39 +65,82 @@ export default function Navigation() {
                 <button
                   key={item.href}
                   onClick={() => handleNavClick(item.href)}
-                  className="text-[hsl(var(--dark-brown))]/65 hover:text-[hsl(var(--camel))] transition-colors duration-300 text-sm font-medium"
+                  className={`transition-colors duration-300 text-sm font-medium ${
+                    isScrolled
+                      ? 'text-[hsl(var(--dark-brown))]/65 hover:text-[hsl(var(--amber))]'
+                      : 'text-white/75 hover:text-white'
+                  }`}
                 >
                   {item.label}
                 </button>
               ))}
             </div>
 
-            {/* CTA Button */}
-            <div className="hidden md:block">
+            {/* 右側：購物車 + CTA */}
+            <div className="hidden md:flex items-center gap-4">
+              {/* 購物車圖示 */}
+              <button
+                onClick={() => setCartOpen(true)}
+                className={`relative p-2 rounded-full transition-colors duration-300 ${
+                  isScrolled
+                    ? 'text-[hsl(var(--dark-brown))]/70 hover:text-[hsl(var(--amber))]'
+                    : 'text-white/80 hover:text-white'
+                }`}
+                aria-label="購物車"
+              >
+                <ShoppingCart className="w-5 h-5" />
+                {count > 0 && (
+                  <span className="absolute -top-0.5 -right-0.5 w-4.5 h-4.5 min-w-[18px] bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                    {count}
+                  </span>
+                )}
+              </button>
+
+              {/* CTA Button */}
               <a
-                href="#stores"
+                href="#frozen-shop"
                 onClick={(e) => {
                   e.preventDefault();
-                  handleNavClick('#stores');
+                  handleNavClick('#frozen-shop');
                 }}
-                className="px-6 py-2.5 bg-[hsl(var(--camel))] text-white text-sm font-bold rounded-full hover:bg-[hsl(var(--camel-dark))] transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105"
+                className="px-6 py-2.5 bg-[hsl(var(--amber))] text-white text-sm font-bold rounded-full hover:bg-[hsl(var(--amber-dark))] transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105"
               >
-                尋找門市
+                立即選購
               </a>
             </div>
 
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden w-10 h-10 flex items-center justify-center text-[hsl(var(--dark-brown))]"
-              aria-label="Toggle menu"
-            >
-              {isMobileMenuOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
-            </button>
+            {/* Mobile: Cart + Menu Button */}
+            <div className="flex md:hidden items-center gap-2">
+              <button
+                onClick={() => setCartOpen(true)}
+                className={`relative p-2 rounded-full transition-colors duration-300 ${
+                  isScrolled
+                    ? 'text-[hsl(var(--dark-brown))]'
+                    : 'text-white'
+                }`}
+                aria-label="購物車"
+              >
+                <ShoppingCart className="w-5 h-5" />
+                {count > 0 && (
+                  <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                    {count}
+                  </span>
+                )}
+              </button>
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className={`w-10 h-10 flex items-center justify-center transition-colors duration-300 ${
+                  isScrolled ? 'text-[hsl(var(--dark-brown))]' : 'text-white'
+                }`}
+                aria-label="Toggle menu"
+              >
+                {isMobileMenuOpen ? (
+                  <X className="w-6 h-6" />
+                ) : (
+                  <Menu className="w-6 h-6" />
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </nav>
@@ -104,7 +153,7 @@ export default function Navigation() {
       >
         {/* Backdrop */}
         <div
-          className="absolute inset-0 bg-white/95 backdrop-blur-xl"
+          className="absolute inset-0 bg-[hsl(25,10%,88%)]/95 backdrop-blur-xl"
           onClick={() => setIsMobileMenuOpen(false)}
         />
 
@@ -114,7 +163,7 @@ export default function Navigation() {
             <button
               key={item.href}
               onClick={() => handleNavClick(item.href)}
-              className={`text-2xl font-medium text-[hsl(var(--dark-brown))] hover:text-[hsl(var(--camel))] transition-all duration-300 ${
+              className={`text-2xl font-medium text-[hsl(var(--dark-brown))] hover:text-[hsl(var(--amber))] transition-all duration-300 ${
                 isMobileMenuOpen
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-4'
@@ -125,19 +174,19 @@ export default function Navigation() {
             </button>
           ))}
           <a
-            href="#stores"
+            href="#frozen-shop"
             onClick={(e) => {
               e.preventDefault();
-              handleNavClick('#stores');
+              handleNavClick('#frozen-shop');
             }}
-            className={`mt-4 px-8 py-3 bg-[hsl(var(--camel))] text-white font-bold rounded-full transition-all duration-300 shadow-md ${
+            className={`mt-4 px-8 py-3 bg-[hsl(var(--amber))] text-white font-bold rounded-full transition-all duration-300 shadow-md ${
               isMobileMenuOpen
                 ? 'opacity-100 translate-y-0'
                 : 'opacity-0 translate-y-4'
             }`}
             style={{ transitionDelay: '200ms' }}
           >
-            尋找門市
+            立即選購
           </a>
         </div>
       </div>

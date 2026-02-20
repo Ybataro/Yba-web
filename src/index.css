@@ -6,35 +6,40 @@
 
 @layer base {
   :root {
-    /* 阿爸的芋圓 — 淺色暖調主題 */
-    --background: 32 35% 96%;       /* 奶油白 #F7F2EB */
-    --foreground: 30 12% 12%;       /* 深褐色 #1F1B18 */
-    --card: 0 0% 100%;              /* 白色 */
-    --card-foreground: 30 12% 12%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 30 12% 12%;
-    --primary: 35 40% 45%;          /* 駝色 */
-    --primary-foreground: 0 0% 100%;
-    --secondary: 32 25% 92%;
-    --secondary-foreground: 30 12% 12%;
-    --muted: 32 20% 90%;
-    --muted-foreground: 30 10% 45%;
-    --accent: 35 40% 45%;
-    --accent-foreground: 0 0% 100%;
+    /* 阿爸的芋圓 — SOUK 暖灰調色系 */
+    --background: 25 10% 88%;       /* 橡木灰淺 (底色) */
+    --foreground: 25 10% 25%;       /* 橡木灰深 (文字) */
+    --card: 25 8% 92%;              /* 卡片底 */
+    --card-foreground: 25 10% 25%;
+    --popover: 25 8% 92%;
+    --popover-foreground: 25 10% 25%;
+    --primary: 40 28% 62%;          /* 麦秆黄 */
+    --primary-foreground: 25 10% 95%;
+    --secondary: 25 8% 84%;
+    --secondary-foreground: 25 10% 25%;
+    --muted: 25 8% 82%;
+    --muted-foreground: 25 8% 50%;
+    --accent: 40 28% 62%;
+    --accent-foreground: 25 10% 95%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 32 15% 88%;
-    --input: 32 15% 88%;
-    --ring: 35 40% 45%;
+    --border: 25 8% 80%;
+    --input: 25 8% 80%;
+    --ring: 40 28% 62%;
     --radius: 0.75rem;
 
-    /* 品牌色 */
-    --camel: 35 40% 45%;            /* 駝色主色 */
-    --camel-light: 35 35% 55%;     /* 淺駝 */
-    --camel-dark: 35 45% 35%;      /* 深駝 */
-    --dark-brown: 30 12% 12%;      /* 深褐色 */
-    --cream: 32 35% 96%;           /* 奶油白 */
-    --cream-text: 30 15% 95%;      /* 米白文字（用於深色區塊） */
+    /* 品牌色 — SOUK 鄰近色系 */
+    --camel: 40 28% 62%;            /* 麦秆黄（主色） */
+    --camel-light: 40 25% 72%;     /* 淺麦秆 */
+    --camel-dark: 40 30% 48%;      /* 深麦秆 */
+    --dark-brown: 25 10% 38%;      /* 橡木灰（深色區塊） */
+    --cream: 25 10% 88%;           /* 橡木灰淺（底色） */
+    --cream-text: 25 10% 93%;      /* 淺灰文字（用於深色區塊） */
+
+    /* 麦秆黄 — 品牌重點色（取代琥珀金） */
+    --amber: 40 28% 62%;           /* 麦秆黄 */
+    --amber-light: 40 25% 72%;    /* 淺麦秆 */
+    --amber-dark: 40 30% 48%;     /* 深麦秆 */
   }
 }
 
@@ -69,15 +74,37 @@
   }
 
   .glow-camel {
-    box-shadow: 0 0 30px rgba(160, 128, 80, 0.2), 0 0 60px rgba(160, 128, 80, 0.08);
+    box-shadow: 0 0 30px rgba(180, 160, 120, 0.2), 0 0 60px rgba(180, 160, 120, 0.08);
   }
 
-  /* 深色區塊背景（用於 Footer、菜單等特定深色區塊） */
+  /* 麦秆黄 utilities */
+  .bg-brand-amber {
+    background-color: hsl(var(--amber));
+  }
+
+  .text-brand-amber {
+    color: hsl(var(--amber));
+  }
+
+  .glow-amber {
+    box-shadow: 0 0 25px rgba(180, 160, 120, 0.25), 0 0 50px rgba(180, 160, 120, 0.1);
+  }
+
+  .bg-gradient-amber {
+    background: linear-gradient(135deg, hsl(var(--amber-light)) 0%, hsl(var(--amber)) 50%, hsl(var(--amber-dark)) 100%);
+  }
+
+  .text-gradient-amber {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(var(--amber-light)) 0%, hsl(var(--amber)) 50%, hsl(var(--amber-dark)) 100%);
+  }
+
+  /* 深色區塊背景（橡木灰） */
   .bg-section-dark {
-    background-color: hsl(30, 12%, 12%);
+    background-color: hsl(25, 10%, 38%);
     background-image:
-      radial-gradient(ellipse at 20% 30%, rgba(160, 128, 80, 0.06) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 70%, rgba(160, 128, 80, 0.04) 0%, transparent 50%);
+      radial-gradient(ellipse at 20% 30%, rgba(180, 160, 120, 0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 70%, rgba(180, 160, 120, 0.04) 0%, transparent 50%);
   }
 
   .animate-float {
@@ -124,6 +151,6 @@
 }
 
 ::selection {
-  background: rgba(160, 128, 80, 0.25);
+  background: rgba(180, 160, 120, 0.25);
   color: hsl(var(--foreground));
 }

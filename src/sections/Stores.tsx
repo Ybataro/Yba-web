@@ -53,7 +53,7 @@ export default function Stores() {
     <section
       id="stores"
       ref={sectionRef}
-      className="relative w-full overflow-hidden bg-white py-24 sm:py-32"
+      className="relative w-full overflow-hidden bg-[hsl(var(--cream))] py-24 sm:py-32"
     >
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

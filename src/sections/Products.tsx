@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Snowflake, Circle, Droplets, Wheat, ChevronRight } from 'lucide-react';
+import { Snowflake, Circle, Droplets, Wheat } from 'lucide-react';
 
 const signatureItems = [
   {
@@ -104,7 +104,7 @@ export default function Products() {
   return (
     <section id="products" ref={sectionRef} className="relative w-full overflow-hidden">
       {/* ===== 上半：必點特色 - 大圖卡片橫排 ===== */}
-      <div className="relative bg-[hsl(var(--cream))] py-24 sm:py-32 overflow-hidden">
+      <div className="relative bg-[hsl(var(--cream))] pt-14 pb-16 sm:pt-20 sm:pb-20 overflow-hidden">
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* 標題 - 左對齊 */}
@@ -139,7 +139,7 @@ export default function Products() {
             {signatureItems.map((item, index) => (
               <div
                 key={item.title}
-                className={`group grid lg:grid-cols-2 gap-0 rounded-3xl overflow-hidden bg-white shadow-[0_8px_40px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_50px_rgba(0,0,0,0.12)] transition-all duration-700 ${
+                className={`group grid lg:grid-cols-2 gap-0 rounded-3xl overflow-hidden bg-[hsl(25,10%,92%)] shadow-[0_8px_40px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_50px_rgba(0,0,0,0.12)] transition-all duration-700 ${
                   index % 2 === 1 ? 'lg:direction-rtl' : ''
                 } ${
                   isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
@@ -165,9 +165,8 @@ export default function Products() {
                   </h3>
                   <p className="text-[hsl(var(--camel))] font-medium mb-4">{item.subtitle}</p>
                   <p className="text-[hsl(var(--dark-brown))]/55 leading-relaxed">{item.description}</p>
-                  <div className="mt-6 flex items-center gap-2 text-[hsl(var(--camel))] font-medium text-sm group-hover:gap-3 transition-all duration-300">
-                    <span>了解更多</span>
-                    <ChevronRight className="w-4 h-4" />
+                  <div className="mt-6 flex items-center gap-2 text-[hsl(var(--amber))] font-medium text-sm group-hover:gap-3 transition-all duration-300">
+                    <span>想在家享受？往下看冷凍宅配 →</span>
                   </div>
                 </div>
               </div>
@@ -177,7 +176,7 @@ export default function Products() {
       </div>
 
       {/* ===== 下半：完整菜單 - 深色背景區分 ===== */}
-      <div id="shaved-ice-menu" className="relative bg-[hsl(25,30%,14%)] py-24 sm:py-32 overflow-hidden">
+      <div id="shaved-ice-menu" className="relative bg-[hsl(var(--dark-brown))] py-16 sm:py-20 overflow-hidden">
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* 標題 */}
