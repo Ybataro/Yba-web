@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { Leaf, Heart, Shield, ChevronRight } from 'lucide-react';
+import { Leaf, Heart, Shield, ChevronRight, Sprout } from 'lucide-react';
+import WaveDivider from '@/components/WaveDivider';
+import OrnamentalDivider from '@/components/OrnamentalDivider';
 
 const features = [
   {
@@ -95,7 +97,7 @@ export default function IngredientShowcase() {
             >
               <div className="relative rounded-3xl overflow-hidden shadow-2xl">
                 <img
-                  src="/images/Gemini_Generated_Image_tr3imxtr3imxtr3i.png"
+                  src="/images/Gemini_Generated_Image_jfomlmjfomlmjfom.png"
                   alt="食材爆炸分解圖 — 天然芋頭、甘蔗、配料"
                   className="w-full aspect-[4/3] object-cover"
                 />
@@ -104,7 +106,7 @@ export default function IngredientShowcase() {
               {/* 浮動氣氛小圖 */}
               <div className="absolute -bottom-6 -right-4 w-32 h-32 sm:w-40 sm:h-40 rounded-2xl overflow-hidden shadow-xl border-4 border-[hsl(var(--dark-brown))]">
                 <img
-                  src="/images/Gemini_Generated_Image_o2pv9o2pv9o2pv9o.png"
+                  src="/images/Gemini_Generated_Image_mb81xpmb81xpmb81.png"
                   alt="金色側光湯匙舀冰"
                   className="w-full h-full object-cover"
                 />
@@ -120,28 +122,32 @@ export default function IngredientShowcase() {
               <span className="text-[hsl(var(--amber))] text-sm tracking-[0.3em] uppercase font-medium">
                 Our Story
               </span>
+              <OrnamentalDivider light className="justify-start mt-2 mb-4" />
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mt-3 mb-6 leading-tight">
                 用阿爸的堅持
                 <br />
                 <span className="text-[hsl(var(--amber-light))]">做好每一碗冰</span>
               </h2>
               <div className="space-y-4 text-white/60 leading-relaxed text-lg">
-                <p>
-                  「我們不賣自己不吃的東西。」在樂華夜市的第 11 個年頭，我們從未忘記初心。
+                <p className="relative pl-8">
+                  <span className="absolute left-0 top-[-4px] text-[hsl(var(--amber))]/40 text-3xl font-serif leading-none">&#10077;</span>
+                  我們不賣自己不吃的東西。
+                  <span className="text-[hsl(var(--amber))]/40 text-lg">&#10078;</span>
                 </p>
                 <p>
-                  為了這一碗甜點，我們堅持每天清晨親自研磨杏仁、慢火熬煮甘蔗汁，選用天然芋頭與本地食材，把最單純的味道留在碗裡。
+                  在樂華夜市的第 11 個年頭，我們從未忘記初心。為了這一碗甜點，堅持每天清晨親自研磨杏仁、慢火熬煮甘蔗汁，選用天然芋頭與本地食材，把最單純的味道留在碗裡。
                 </p>
               </div>
 
               {/* 統計數字 */}
               <div className="flex gap-8 mt-10">
-                {stats.map((stat) => (
-                  <div key={stat.label}>
+                {stats.map((stat, index) => (
+                  <div key={stat.label} className="relative">
                     <div className="text-3xl sm:text-4xl font-bold text-[hsl(var(--amber))]">
                       {isVisible && <CountUp end={stat.number} suffix={stat.suffix} />}
                     </div>
                     <div className="text-white/40 text-xs mt-1">{stat.label}</div>
+                    {index === 0 && <Sprout className="absolute -top-2 -right-4 w-4 h-4 text-[hsl(var(--moss))]/40" />}
                   </div>
                 ))}
               </div>
@@ -151,27 +157,33 @@ export default function IngredientShowcase() {
       </div>
 
       {/* ===== 下半：白色底 — 特色卡片 + 導購 CTA ===== */}
-      <div className="relative bg-[hsl(var(--cream))] pt-14 pb-10 sm:pt-20 sm:pb-14 overflow-hidden">
+      <div className="relative bg-[hsl(var(--cream))] pt-20 pb-10 sm:pt-28 sm:pb-14 overflow-hidden">
+        <WaveDivider flip color="hsl(var(--dark-brown))" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* 特色卡片 */}
           <div className="grid sm:grid-cols-3 gap-6 mb-16">
             {features.map((feature, index) => (
               <div
                 key={feature.title}
-                className={`group relative overflow-hidden rounded-2xl bg-[hsl(25,10%,93%)] border border-[hsl(25,10%,80%)] p-8 hover:bg-[hsl(var(--amber))] hover:border-[hsl(var(--amber))] transition-all duration-500 ${
+                className={`feature-card group relative overflow-hidden rounded-3xl border p-8 -translate-y-0 transition-all duration-500 ${
                   isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
                 }`}
                 style={{ transitionDelay: `${600 + index * 100}ms` }}
               >
-                <div className="w-14 h-14 rounded-2xl bg-[hsl(var(--amber))]/12 group-hover:bg-white/20 flex items-center justify-center mb-5 transition-colors duration-500">
-                  <feature.icon className="w-7 h-7 text-[hsl(var(--amber))] group-hover:text-white transition-colors duration-500" />
+                <div className="w-14 h-14 rounded-2xl bg-[hsl(var(--amber))]/12 group-hover:bg-[hsl(var(--dark-brown))]/15 flex items-center justify-center mb-5 transition-colors duration-500">
+                  <feature.icon className="w-7 h-7 text-[hsl(var(--amber))] group-hover:text-[hsl(var(--dark-brown))] transition-colors duration-500" />
                 </div>
-                <h4 className="text-[hsl(var(--dark-brown))] group-hover:text-white font-bold text-lg mb-3 transition-colors duration-500">
+                <h4 className="text-[hsl(var(--dark-brown))] font-bold text-lg mb-3 transition-colors duration-500">
                   {feature.title}
                 </h4>
-                <p className="text-[hsl(var(--dark-brown))]/55 group-hover:text-white/80 text-sm leading-relaxed transition-colors duration-500">
+                <p className="text-[hsl(var(--dark-brown))]/55 group-hover:text-[hsl(var(--dark-brown))]/75 text-sm leading-relaxed mb-4 transition-colors duration-500">
                   {feature.description}
                 </p>
+                <div className="flex items-center justify-center gap-3">
+                  <div className="h-px w-8 bg-[hsl(var(--camel))]/25 group-hover:bg-[hsl(var(--dark-brown))]/25 transition-colors duration-500" />
+                  <span className="text-xs text-[hsl(var(--camel))]/40 group-hover:text-[hsl(var(--dark-brown))]/35 transition-colors duration-500">&#10022;</span>
+                  <div className="h-px w-8 bg-[hsl(var(--camel))]/25 group-hover:bg-[hsl(var(--dark-brown))]/25 transition-colors duration-500" />
+                </div>
               </div>
             ))}
           </div>
@@ -196,6 +208,7 @@ export default function IngredientShowcase() {
               }`}
               style={{ transitionDelay: '700ms' }}
             >
+              <Sprout className="w-4 h-4" />
               在家也能享受 — 冷凍宅配選購
               <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Quote, Star, ShieldCheck, Leaf, Award } from 'lucide-react';
+import OrnamentalDivider from '@/components/OrnamentalDivider';
 
 const testimonials = [
   {
@@ -66,7 +67,7 @@ export default function SocialProof() {
           >
             <div className="relative rounded-3xl overflow-hidden shadow-2xl">
               <img
-                src="/images/Gemini_Generated_Image_2608v62608v62608.png"
+                src="/images/Gemini_Generated_Image_tiqp26tiqp26tiqp.png"
                 alt="芋泥冰淇淋特寫"
                 className="w-full aspect-[4/5] object-cover"
               />
@@ -97,12 +98,13 @@ export default function SocialProof() {
               Reviews
             </span>
             <h2
-              className={`text-3xl sm:text-4xl font-bold text-[hsl(var(--dark-brown))] mb-8 leading-tight transition-all duration-700 delay-100 ${
+              className={`text-3xl sm:text-4xl font-bold text-[hsl(var(--dark-brown))] mb-2 leading-tight transition-all duration-700 delay-100 ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
               }`}
             >
               大家的<span className="text-[hsl(var(--amber))]">五星好評</span>
             </h2>
+            <OrnamentalDivider className="justify-start mb-8" />
 
             {/* 評論卡片 */}
             <div className="space-y-5 mb-10">
@@ -123,7 +125,7 @@ export default function SocialProof() {
                   </div>
 
                   <p className="text-[hsl(var(--dark-brown))] leading-relaxed mb-4 font-medium">
-                    「{item.content}」
+                    <span className="text-[hsl(var(--camel))]/40 text-lg">&#10077;</span> {item.content} <span className="text-[hsl(var(--camel))]/40 text-lg">&#10078;</span>
                   </p>
 
                   <div>

@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Snowflake, Circle, Droplets, Wheat } from 'lucide-react';
+import WaveDivider from '@/components/WaveDivider';
+import OrnamentalDivider from '@/components/OrnamentalDivider';
 
 const signatureItems = [
   {
@@ -176,13 +178,14 @@ export default function Products() {
       </div>
 
       {/* ===== 下半：完整菜單 - 深色背景區分 ===== */}
-      <div id="shaved-ice-menu" className="relative bg-[hsl(var(--dark-brown))] py-16 sm:py-20 overflow-hidden">
+      <div id="shaved-ice-menu" className="relative bg-[hsl(var(--dark-brown))] pt-20 pb-16 sm:pt-28 sm:pb-20 overflow-hidden">
+        <WaveDivider flip color="hsl(var(--cream))" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* 標題 */}
           <div className="text-center mb-12">
             <span
-              className={`inline-block text-[hsl(var(--camel))] text-sm tracking-[0.3em] uppercase mb-3 transition-all duration-700 ${
+              className={`inline-block text-[hsl(var(--camel-light))] text-sm tracking-[0.3em] uppercase mb-3 transition-all duration-700 ${
                 isVisible ? 'opacity-100' : 'opacity-0'
               }`}
             >
@@ -193,8 +196,9 @@ export default function Products() {
                 isVisible ? 'opacity-100' : 'opacity-0'
               }`}
             >
-              完整菜單
+              &#10022; 完整菜單 &#10022;
             </h2>
+            <OrnamentalDivider light className="mb-4" />
             <p className="text-white/40 max-w-lg mx-auto">
               四大系列，超過 15 種選擇，總有一碗屬於你
             </p>
@@ -243,7 +247,7 @@ export default function Products() {
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-1">
                       {isSignature && (
-                        <span className="px-2 py-0.5 bg-[hsl(var(--camel))] text-white text-[10px] font-bold rounded-full">
+                        <span className="px-2 py-0.5 bg-[hsl(var(--brick))] text-white text-[10px] font-bold rounded-full">
                           招牌
                         </span>
                       )}

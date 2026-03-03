@@ -28,7 +28,7 @@ export const frozenProducts: FrozenProduct[] = [
     category: '芋圓系列',
     spec: 'HB350g',
     price: 135,
-    image: '/images/fresh-taro.jpg',
+    image: '/images/handmade-taro.jpg',
     description: '地瓜粉手工製作，口感軟Q',
   },
   {

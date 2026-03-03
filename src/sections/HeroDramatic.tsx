@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Award, ChevronRight } from 'lucide-react';
+import { Award, ChevronRight, Sprout } from 'lucide-react';
+import WaveDivider from '@/components/WaveDivider';
+import OrnamentalDivider from '@/components/OrnamentalDivider';
 
 export default function HeroDramatic() {
   const [isVisible, setIsVisible] = useState(false);
@@ -12,7 +14,7 @@ export default function HeroDramatic() {
     <section className="relative h-screen min-h-[600px] w-full overflow-hidden">
       {/* 全螢幕背景圖 */}
       <img
-        src="/images/Gemini_Generated_Image_rtu6ynrtu6ynrtu6.png"
+        src="/images/Gemini_Generated_Image_pzb5nrpzb5nrpzb5.png"
         alt="阿爸的芋圓 — 碗裝冰品與天然食材"
         className="absolute inset-0 w-full h-full object-cover"
       />
@@ -50,6 +52,11 @@ export default function HeroDramatic() {
             </span>
           </h1>
 
+          {/* 復古裝飾線 */}
+          <OrnamentalDivider light className={`justify-start mt-4 transition-all duration-700 delay-150 ${
+            isVisible ? 'opacity-100' : 'opacity-0'
+          }`} />
+
           {/* 副標語 */}
           <p
             className={`mt-4 text-[hsl(var(--amber-light))] text-sm sm:text-base tracking-[0.2em] uppercase font-medium transition-all duration-700 delay-200 ${
@@ -83,6 +90,7 @@ export default function HeroDramatic() {
               }}
               className="group px-8 py-4 bg-[hsl(var(--amber))] text-white font-bold rounded-full hover:bg-[hsl(var(--amber-dark))] transition-all duration-300 hover:scale-105 shadow-lg glow-amber inline-flex items-center justify-center gap-2"
             >
+              <Sprout className="w-4 h-4" />
               立即選購
               <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
@@ -100,8 +108,8 @@ export default function HeroDramatic() {
         </div>
       </div>
 
-      {/* 底部漸變到深色（無縫接 IngredientShowcase） */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[hsl(var(--dark-brown))] to-transparent z-10" />
+      {/* 底部波浪過渡（無縫接 IngredientShowcase） */}
+      <WaveDivider color="hsl(var(--dark-brown))" />
     </section>
   );
 }

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { ShoppingCart, Package, Truck, Phone, Plus, Check, ArrowRight } from 'lucide-react';
+import WaveDivider from '@/components/WaveDivider';
 
 import { frozenProducts } from '@/data/frozenProducts';
 import { useFrozenCartStore } from '@/stores/frozenCartStore';
@@ -153,7 +154,8 @@ export default function FrozenShop() {
       </div>
 
       {/* ===== 深色區：運費/出貨/付款 + CTA ===== */}
-      <div className="relative bg-[hsl(var(--dark-brown))] py-12 sm:py-16 overflow-hidden">
+      <div className="relative bg-[hsl(var(--dark-brown))] pt-16 pb-12 sm:pt-24 sm:pb-16 overflow-hidden">
+        <WaveDivider flip color="hsl(var(--cream))" />
         <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
             <div className="text-center">

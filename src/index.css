@@ -6,40 +6,44 @@
 
 @layer base {
   :root {
-    /* 阿爸的芋圓 — SOUK 暖灰調色系 */
-    --background: 25 10% 88%;       /* 橡木灰淺 (底色) */
-    --foreground: 25 10% 25%;       /* 橡木灰深 (文字) */
-    --card: 25 8% 92%;              /* 卡片底 */
-    --card-foreground: 25 10% 25%;
-    --popover: 25 8% 92%;
-    --popover-foreground: 25 10% 25%;
-    --primary: 40 28% 62%;          /* 麦秆黄 */
-    --primary-foreground: 25 10% 95%;
-    --secondary: 25 8% 84%;
-    --secondary-foreground: 25 10% 25%;
-    --muted: 25 8% 82%;
-    --muted-foreground: 25 8% 50%;
-    --accent: 40 28% 62%;
-    --accent-foreground: 25 10% 95%;
+    /* 阿爸的芋圓 — Nature Distilled × Cottagecore 混合色系 */
+    --background: 30 33% 94%;       /* #F5F0EB 暖米白 */
+    --foreground: 25 18% 20%;       /* 深木文字 */
+    --card: 30 25% 93%;             /* 卡片底 */
+    --card-foreground: 25 18% 20%;
+    --popover: 30 25% 93%;
+    --popover-foreground: 25 18% 20%;
+    --primary: 30 20% 44%;          /* #8B7355 大地棕 */
+    --primary-foreground: 30 33% 95%;
+    --secondary: 30 15% 86%;
+    --secondary-foreground: 25 18% 20%;
+    --muted: 30 12% 84%;
+    --muted-foreground: 25 10% 50%;
+    --accent: 25 40% 59%;           /* #C4956A 陶土橘棕 */
+    --accent-foreground: 30 33% 95%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 25 8% 80%;
-    --input: 25 8% 80%;
-    --ring: 40 28% 62%;
+    --border: 30 15% 82%;
+    --input: 30 15% 82%;
+    --ring: 30 20% 44%;
     --radius: 0.75rem;
 
-    /* 品牌色 — SOUK 鄰近色系 */
-    --camel: 40 28% 62%;            /* 麦秆黄（主色） */
-    --camel-light: 40 25% 72%;     /* 淺麦秆 */
-    --camel-dark: 40 30% 48%;      /* 深麦秆 */
-    --dark-brown: 25 10% 38%;      /* 橡木灰（深色區塊） */
-    --cream: 25 10% 88%;           /* 橡木灰淺（底色） */
-    --cream-text: 25 10% 93%;      /* 淺灰文字（用於深色區塊） */
+    /* 品牌色 — Nature Distilled × Cottagecore */
+    --camel: 30 20% 44%;            /* #8B7355 大地棕（主色） */
+    --camel-light: 25 40% 59%;     /* #C4956A 陶土橘棕 */
+    --camel-dark: 27 28% 48%;      /* #A67C52 焙茶色 */
+    --dark-brown: 24 17% 19%;      /* #3D3229 深木色 */
+    --cream: 30 33% 94%;           /* #F5F0EB 暖米白 */
+    --cream-text: 30 25% 93%;      /* 淺灰文字（用於深色區塊） */
 
-    /* 麦秆黄 — 品牌重點色（取代琥珀金） */
-    --amber: 40 28% 62%;           /* 麦秆黄 */
-    --amber-light: 40 25% 72%;    /* 淺麦秆 */
-    --amber-dark: 40 30% 48%;     /* 深麦秆 */
+    /* 品牌重點色 */
+    --amber: 27 28% 48%;           /* #A67C52 焙茶色（CTA） */
+    --amber-light: 25 40% 59%;    /* #C4956A 陶土橘棕 */
+    --amber-dark: 30 20% 44%;     /* #8B7355 大地棕 */
+
+    /* 點綴色 */
+    --moss: 100 12% 49%;           /* #7A8B6F 苔綠 */
+    --brick: 13 40% 50%;           /* #B85C4A 磚紅 */
   }
 }
 
@@ -63,6 +67,20 @@
   }
 }
 
+@layer components {
+  .feature-card {
+    background-color: hsl(var(--cream));
+    border-color: hsl(var(--camel) / 0.15);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  .feature-card:hover {
+    background-color: #D5CEC6;
+    border-color: #D5CEC6;
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(139, 115, 85, 0.2);
+  }
+}
+
 @layer utilities {
   .text-gradient-camel {
     @apply bg-clip-text text-transparent;
@@ -74,10 +92,10 @@
   }
 
   .glow-camel {
-    box-shadow: 0 0 30px rgba(180, 160, 120, 0.2), 0 0 60px rgba(180, 160, 120, 0.08);
+    box-shadow: 0 0 30px rgba(139, 115, 85, 0.2), 0 0 60px rgba(139, 115, 85, 0.08);
   }
 
-  /* 麦秆黄 utilities */
+  /* 焙茶色 utilities */
   .bg-brand-amber {
     background-color: hsl(var(--amber));
   }
@@ -87,7 +105,7 @@
   }
 
   .glow-amber {
-    box-shadow: 0 0 25px rgba(180, 160, 120, 0.25), 0 0 50px rgba(180, 160, 120, 0.1);
+    box-shadow: 0 0 25px rgba(166, 124, 82, 0.25), 0 0 50px rgba(166, 124, 82, 0.1);
   }
 
   .bg-gradient-amber {
@@ -99,12 +117,29 @@
     background-image: linear-gradient(135deg, hsl(var(--amber-light)) 0%, hsl(var(--amber)) 50%, hsl(var(--amber-dark)) 100%);
   }
 
-  /* 深色區塊背景（橡木灰） */
+  /* 深色區塊背景（深木色） */
   .bg-section-dark {
-    background-color: hsl(25, 10%, 38%);
+    background-color: hsl(24, 17%, 19%);
     background-image:
-      radial-gradient(ellipse at 20% 30%, rgba(180, 160, 120, 0.06) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 70%, rgba(180, 160, 120, 0.04) 0%, transparent 50%);
+      radial-gradient(ellipse at 20% 30%, rgba(166, 124, 82, 0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 70%, rgba(122, 139, 111, 0.04) 0%, transparent 50%);
+  }
+
+  /* 紙張紋理 overlay */
+  .bg-paper-texture {
+    position: relative;
+  }
+  .bg-paper-texture::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.03;
+    background-image:
+      radial-gradient(circle at 25% 25%, rgba(139, 115, 85, 1) 1px, transparent 1px),
+      radial-gradient(circle at 75% 75%, rgba(139, 115, 85, 1) 1px, transparent 1px);
+    background-size: 30px 30px;
+    pointer-events: none;
+    z-index: 1;
   }
 
   .animate-float {
@@ -151,6 +186,6 @@
 }
 
 ::selection {
-  background: rgba(180, 160, 120, 0.25);
+  background: rgba(166, 124, 82, 0.25);
   color: hsl(var(--foreground));
 }

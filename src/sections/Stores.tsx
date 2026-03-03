@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { MapPin, Clock, Phone, ExternalLink, Navigation } from 'lucide-react';
+import OrnamentalDivider from '@/components/OrnamentalDivider';
 
 const stores = [
   {
@@ -74,6 +75,7 @@ export default function Stores() {
             >
               門市資訊
             </h2>
+            <OrnamentalDivider className="justify-start mt-3" />
           </div>
 
           {/* 門市切換按鈕 */}

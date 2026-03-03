@@ -1,12 +1,15 @@
 import { Phone, MapPin, Instagram, Facebook, Award } from 'lucide-react';
+import OrnamentalDivider from '@/components/OrnamentalDivider';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
     <footer className="relative w-full overflow-hidden">
-      {/* 頂部分隔線 */}
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[hsl(var(--camel))]/30 to-transparent" />
+      {/* 頂部裝飾分隔線 */}
+      <div className="pt-6">
+        <OrnamentalDivider />
+      </div>
 
       {/* 主要內容 */}
       <div className="relative bg-section-dark py-16 sm:py-20 overflow-hidden">

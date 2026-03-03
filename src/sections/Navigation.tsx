@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, ShoppingCart } from 'lucide-react';
+import { Menu, X, ShoppingCart, Leaf } from 'lucide-react';
 import { useFrozenCartStore } from '@/stores/frozenCartStore';
 
 const navItems = [
@@ -50,9 +50,10 @@ export default function Navigation() {
               }}
               className="flex items-center gap-2"
             >
-              <span className={`text-xl sm:text-2xl font-bold transition-colors duration-500 ${
+              <span className={`text-xl sm:text-2xl font-bold transition-colors duration-500 flex items-center gap-1.5 ${
                 isScrolled ? 'text-[hsl(var(--dark-brown))]' : 'text-white'
               }`}>
+                <Leaf className={`w-5 h-5 transition-colors duration-500 ${isScrolled ? 'text-[hsl(var(--moss))]' : 'text-[hsl(var(--moss))]'}`} />
                 阿爸的<span className={`transition-colors duration-500 ${
                   isScrolled ? 'text-[hsl(var(--amber))]' : 'text-[hsl(var(--amber-light))]'
                 }`}>芋圓</span>
