@@ -1,3 +1,4 @@
+import { Routes, Route } from 'react-router-dom';
 import Navigation from './sections/Navigation';
 import HeroDramatic from './sections/HeroDramatic';
 import IngredientShowcase from './sections/IngredientShowcase';
@@ -7,10 +8,11 @@ import SocialProof from './sections/SocialProof';
 import Stores from './sections/Stores';
 import Footer from './sections/Footer';
 import CartDrawer from './components/CartDrawer';
+import Admin from './pages/Admin';
 import { ShoppingCart } from 'lucide-react';
 import { useFrozenCartStore } from './stores/frozenCartStore';
 
-function App() {
+function LandingPage() {
   const { totalItems, setCartOpen, isCartOpen } = useFrozenCartStore();
   const count = totalItems();
 
@@ -44,6 +46,15 @@ function App() {
         </button>
       )}
     </div>
+  );
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/admin" element={<Admin />} />
+    </Routes>
   );
 }
 

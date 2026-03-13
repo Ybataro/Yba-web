@@ -1,37 +1,34 @@
 import { useEffect, useRef, useState } from 'react';
 import { Quote, Star, ShieldCheck, Leaf, Award } from 'lucide-react';
 import OrnamentalDivider from '@/components/OrnamentalDivider';
+import { useCmsContent } from '@/hooks/useCmsContent';
 
-const testimonials = [
-  {
-    source: 'Google 評論',
-    content: '蔗片冰的口感超特別，清甜不膩，必比登實至名歸！',
-    name: '在地老客人',
-    rating: 5,
-  },
-  {
-    source: 'IG 美食部落客',
-    content: '芋頭控必朝聖，黑芝麻漿濃郁到不行，配上蔗片冰完全停不下來。',
-    name: '@taipei_foodie',
-    rating: 5,
-  },
-  {
-    source: '夜市遊客',
-    content: '本來只是路過排隊，吃完之後每次來樂華都一定繞過來一碗。',
-    name: '週末逛夜市情侶',
-    rating: 5,
-  },
+const promiseIcons = [Leaf, ShieldCheck, Award];
+
+const testimonialsDefault = [
+  { source: 'Google 評論', content: '蔗片冰的口感超特別，清甜不膩，必比登實至名歸！', name: '在地老客人', rating: 5 },
+  { source: 'IG 美食部落客', content: '芋頭控必朝聖，黑芝麻漿濃郁到不行，配上蔗片冰完全停不下來。', name: '@taipei_foodie', rating: 5 },
+  { source: '夜市遊客', content: '本來只是路過排隊，吃完之後每次來樂華都一定繞過來一碗。', name: '週末逛夜市情侶', rating: 5 },
 ];
 
-const promises = [
-  { icon: Leaf, text: '100% 天然食材' },
-  { icon: ShieldCheck, text: '無人工添加物' },
-  { icon: Award, text: '必比登認證品質' },
+const promisesDefault = [
+  { text: '100% 天然食材' },
+  { text: '無人工添加物' },
+  { text: '必比登認證品質' },
 ];
+
+const socialProofDefaults = {
+  heroImage: '/images/Gemini_Generated_Image_tiqp26tiqp26tiqp.png',
+  testimonials: testimonialsDefault,
+  promises: promisesDefault,
+};
 
 export default function SocialProof() {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const { data: cms } = useCmsContent('social_proof', socialProofDefaults);
+  const testimonials = cms.testimonials || testimonialsDefault;
+  const promises = (cms.promises || promisesDefault).map((p, i) => ({ ...p, icon: promiseIcons[i] || Leaf }));
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -67,7 +64,7 @@ export default function SocialProof() {
           >
             <div className="relative rounded-3xl overflow-hidden shadow-2xl">
               <img
-                src="/images/Gemini_Generated_Image_tiqp26tiqp26tiqp.png"
+                src={cms.heroImage}
                 alt="芋泥冰淇淋特寫"
                 className="w-full aspect-[4/5] object-cover"
               />

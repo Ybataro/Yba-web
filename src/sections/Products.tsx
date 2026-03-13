@@ -2,35 +2,39 @@ import { useEffect, useRef, useState } from 'react';
 import { Snowflake, Circle, Droplets, Wheat } from 'lucide-react';
 import WaveDivider from '@/components/WaveDivider';
 import OrnamentalDivider from '@/components/OrnamentalDivider';
+import { useCmsContent } from '@/hooks/useCmsContent';
 
-const signatureItems = [
+const categoryIcons: Record<string, typeof Snowflake> = {
+  'shaved-ice': Snowflake,
+  'taro': Circle,
+  'tofu': Droplets,
+  'healthy': Wheat,
+};
+
+const signatureItemsDefault = [
   {
     title: '琥珀色蔗片冰',
     subtitle: '11 年靈魂招牌',
-    description:
-      '非傳統水冰，用整根甘蔗壓榨後製冰再削片，入口清甜、透心涼，是樂華夜市的必吃經典。',
+    description: '非傳統水冰，用整根甘蔗壓榨後製冰再削片，入口清甜、透心涼，是樂華夜市的必吃經典。',
     image: '/images/3Q芋泥蔗片冰_橫.JPG',
   },
   {
     title: '自家濃郁冰淇淋',
     subtitle: '400ml 杯裝',
-    description:
-      '花生、芝麻、草莓等口味皆為自家配方，紮實口感與蔗片冰一起入口，拍照打卡、口感都滿分。',
+    description: '花生、芝麻、草莓等口味皆為自家配方，紮實口感與蔗片冰一起入口，拍照打卡、口感都滿分。',
     image: '/images/taro-icecream.jpg',
   },
   {
     title: '自磨醇香雙漿',
     subtitle: '花生 x 黑芝麻',
-    description:
-      '濃郁黑芝麻與厚實花生醬，現磨現煮，淋在冰片上的瞬間，把香氣與食慾一起推到最高點。',
+    description: '濃郁黑芝麻與厚實花生醬，現磨現煮，淋在冰片上的瞬間，把香氣與食慾一起推到最高點。',
     image: '/images/芋泥花生蔗片冰_橫.JPG',
   },
 ];
 
-const categories = [
+const categoriesDefault = [
   {
     id: 'shaved-ice',
-    icon: Snowflake,
     name: '蔗片冰系列',
     description: '以 100% 天然甘蔗汁製成的琥珀色蔗片冰，是 11 年來的靈魂基底。',
     items: [
@@ -42,7 +46,6 @@ const categories = [
   },
   {
     id: 'taro',
-    icon: Circle,
     name: '芋圓系列',
     description: '每日手工現做，Q彈有嚼勁',
     items: [
@@ -54,7 +57,6 @@ const categories = [
   },
   {
     id: 'tofu',
-    icon: Droplets,
     name: '豆花系列',
     description: '傳統手工豆花，香滑細嫩',
     items: [
@@ -66,7 +68,6 @@ const categories = [
   },
   {
     id: 'healthy',
-    icon: Wheat,
     name: '養身系列',
     description: '健康養生，溫潤滋補',
     items: [
@@ -78,10 +79,21 @@ const categories = [
   },
 ];
 
+const productsDefaults = {
+  signatureItems: signatureItemsDefault,
+  categories: categoriesDefault,
+};
+
 export default function Products() {
   const [isVisible, setIsVisible] = useState(false);
   const [activeCategory, setActiveCategory] = useState('shaved-ice');
   const sectionRef = useRef<HTMLDivElement>(null);
+  const { data: cms } = useCmsContent('products', productsDefaults);
+  const signatureItems = cms.signatureItems || signatureItemsDefault;
+  const categories = (cms.categories || categoriesDefault).map((c) => ({
+    ...c,
+    icon: categoryIcons[c.id] || Snowflake,
+  }));
 
   useEffect(() => {
     const observer = new IntersectionObserver(

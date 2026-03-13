@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { MapPin, Clock, Phone, ExternalLink, Navigation } from 'lucide-react';
 import OrnamentalDivider from '@/components/OrnamentalDivider';
+import { useCmsContent } from '@/hooks/useCmsContent';
 
-const stores = [
+const storesDefault = [
   {
     name: '樂華總店',
     address: '新北市永和區保平路18巷1號',
@@ -25,10 +26,16 @@ const stores = [
   },
 ];
 
+const storesDefaults = {
+  stores: storesDefault,
+};
+
 export default function Stores() {
   const [isVisible, setIsVisible] = useState(false);
   const [activeStore, setActiveStore] = useState(0);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const { data: cms } = useCmsContent('stores', storesDefaults);
+  const stores = cms.stores || storesDefault;
 
   useEffect(() => {
     const observer = new IntersectionObserver(

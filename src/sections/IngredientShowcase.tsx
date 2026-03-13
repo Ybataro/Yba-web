@@ -2,30 +2,34 @@ import { useEffect, useRef, useState } from 'react';
 import { Leaf, Heart, Shield, ChevronRight, Sprout } from 'lucide-react';
 import WaveDivider from '@/components/WaveDivider';
 import OrnamentalDivider from '@/components/OrnamentalDivider';
+import { useCmsContent } from '@/hooks/useCmsContent';
 
-const features = [
-  {
-    icon: Leaf,
-    title: '天然食材',
-    description: '100% 天然甘蔗汁製成冰品，不添加任何人工色素與防腐劑',
-  },
-  {
-    icon: Heart,
-    title: '手工製作',
-    description: '每日新鮮現做，傳承阿爸的手藝與堅持',
-  },
-  {
-    icon: Shield,
-    title: '安心品質',
-    description: '嚴選優質原料，讓您吃得安心、放心',
-  },
+const featureIcons = [Leaf, Heart, Shield];
+
+const featuresDefault = [
+  { title: '天然食材', description: '100% 天然甘蔗汁製成冰品，不添加任何人工色素與防腐劑' },
+  { title: '手工製作', description: '每日新鮮現做，傳承阿爸的手藝與堅持' },
+  { title: '安心品質', description: '嚴選優質原料，讓您吃得安心、放心' },
 ];
 
-const stats = [
+const statsDefault = [
   { number: 11, suffix: '年', label: '樂華夜市在地經營' },
   { number: 100, suffix: '%', label: '純甘蔗汁製冰' },
   { number: 1, suffix: '次', label: '必比登推薦' },
 ];
+
+const storyDefaults = {
+  storyTitle: '用阿爸的堅持',
+  storyTitleHighlight: '做好每一碗冰',
+  storyQuote: '我們不賣自己不吃的東西。',
+  storyBody: '在樂華夜市的第 11 個年頭，我們從未忘記初心。為了這一碗甜點，堅持每天清晨親自研磨杏仁、慢火熬煮甘蔗汁，選用天然芋頭與本地食材，把最單純的味道留在碗裡。',
+  mainImage: '/images/Gemini_Generated_Image_jfomlmjfomlmjfom.png',
+  floatImage: '/images/Gemini_Generated_Image_mb81xpmb81xpmb81.png',
+  ctaText: '在家也能享受 — 冷凍宅配選購',
+  ctaSubtext: '榮獲必比登推薦，是對這份「在地精神」最好的肯定',
+  features: featuresDefault,
+  stats: statsDefault,
+};
 
 function CountUp({ end, duration = 2000, suffix = '' }: { end: number; duration?: number; suffix?: string }) {
   const [count, setCount] = useState(0);
@@ -61,6 +65,9 @@ function CountUp({ end, duration = 2000, suffix = '' }: { end: number; duration?
 export default function IngredientShowcase() {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const { data: cms } = useCmsContent('story', storyDefaults);
+  const features = (cms.features || featuresDefault).map((f, i) => ({ ...f, icon: featureIcons[i] || Leaf }));
+  const stats = cms.stats || statsDefault;
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -97,7 +104,7 @@ export default function IngredientShowcase() {
             >
               <div className="relative rounded-3xl overflow-hidden shadow-2xl">
                 <img
-                  src="/images/Gemini_Generated_Image_jfomlmjfomlmjfom.png"
+                  src={cms.mainImage}
                   alt="食材爆炸分解圖 — 天然芋頭、甘蔗、配料"
                   className="w-full aspect-[4/3] object-cover"
                 />
@@ -106,7 +113,7 @@ export default function IngredientShowcase() {
               {/* 浮動氣氛小圖 */}
               <div className="absolute -bottom-6 -right-4 w-32 h-32 sm:w-40 sm:h-40 rounded-2xl overflow-hidden shadow-xl border-4 border-[hsl(var(--dark-brown))]">
                 <img
-                  src="/images/Gemini_Generated_Image_mb81xpmb81xpmb81.png"
+                  src={cms.floatImage}
                   alt="金色側光湯匙舀冰"
                   className="w-full h-full object-cover"
                 />
@@ -124,18 +131,18 @@ export default function IngredientShowcase() {
               </span>
               <OrnamentalDivider light className="justify-start mt-2 mb-4" />
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mt-3 mb-6 leading-tight">
-                用阿爸的堅持
+                {cms.storyTitle}
                 <br />
-                <span className="text-[hsl(var(--amber-light))]">做好每一碗冰</span>
+                <span className="text-[hsl(var(--amber-light))]">{cms.storyTitleHighlight}</span>
               </h2>
               <div className="space-y-4 text-white/60 leading-relaxed text-lg">
                 <p className="relative pl-8">
                   <span className="absolute left-0 top-[-4px] text-[hsl(var(--amber))]/40 text-3xl font-serif leading-none">&#10077;</span>
-                  我們不賣自己不吃的東西。
+                  {cms.storyQuote}
                   <span className="text-[hsl(var(--amber))]/40 text-lg">&#10078;</span>
                 </p>
                 <p>
-                  在樂華夜市的第 11 個年頭，我們從未忘記初心。為了這一碗甜點，堅持每天清晨親自研磨杏仁、慢火熬煮甘蔗汁，選用天然芋頭與本地食材，把最單純的味道留在碗裡。
+                  {cms.storyBody}
                 </p>
               </div>
 
@@ -195,7 +202,7 @@ export default function IngredientShowcase() {
                 isVisible ? 'opacity-100' : 'opacity-0'
               }`}
             >
-              榮獲必比登推薦，是對這份「在地精神」最好的肯定
+              {cms.ctaSubtext}
             </p>
             <a
               href="#frozen-shop"
@@ -209,7 +216,7 @@ export default function IngredientShowcase() {
               style={{ transitionDelay: '700ms' }}
             >
               <Sprout className="w-4 h-4" />
-              在家也能享受 — 冷凍宅配選購
+              {cms.ctaText}
               <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
           </div>

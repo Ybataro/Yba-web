@@ -1,8 +1,23 @@
 import { Phone, MapPin, Instagram, Facebook, Award } from 'lucide-react';
 import OrnamentalDivider from '@/components/OrnamentalDivider';
+import { useCmsContent } from '@/hooks/useCmsContent';
+
+const footerDefaults = {
+  brandName: '阿爸的芋圓',
+  brandNameEn: 'YBA Taro Balls',
+  badge: '2025 新北市必比登推薦 · 永和樂華夜市',
+  description: '以 100% 純甘蔗汁製成琥珀色蔗片冰，搭配每日手作芋圓、芋泥與雙漿。\n從樂華夜市出發的 11 年職人冰品，每一口都吃得到用心與在地味。',
+  phone: '02-29247461',
+  mainStoreAddress: '樂華總店：新北市永和區保平路18巷1號',
+  branchAddress: '興南店：新北市中和區信義街7號（14:30-22:00）',
+  hours: '營業時間：每日 15:30 - 23:00',
+  facebookUrl: 'https://www.facebook.com/YBATARO',
+  instagramUrl: 'https://www.instagram.com/yba_taro',
+};
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const { data: cms } = useCmsContent('footer', footerDefaults);
 
   return (
     <footer className="relative w-full overflow-hidden">
@@ -18,19 +33,17 @@ export default function Footer() {
           <div className="grid md:grid-cols-3 gap-12">
             {/* 品牌資訊 */}
             <div>
-              <h3 className="text-2xl font-bold text-white mb-2">阿爸的芋圓</h3>
-              <p className="text-[hsl(var(--camel))] text-sm mb-4 tracking-wider">YBA Taro Balls</p>
+              <h3 className="text-2xl font-bold text-white mb-2">{cms.brandName}</h3>
+              <p className="text-[hsl(var(--camel))] text-sm mb-4 tracking-wider">{cms.brandNameEn}</p>
               {/* 必比登榮譽 */}
               <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[hsl(var(--camel))]/15 border border-[hsl(var(--camel))]/30 rounded-lg mb-4">
                 <Award className="w-4 h-4 text-[hsl(var(--camel))]" />
                 <span className="text-[hsl(var(--camel))] text-xs font-medium">
-                  2025 新北市必比登推薦 · 永和樂華夜市
+                  {cms.badge}
                 </span>
               </div>
-              <p className="text-white/50 text-sm leading-relaxed">
-                以 100% 純甘蔗汁製成琥珀色蔗片冰，搭配每日手作芋圓、芋泥與雙漿。
-                <br />
-                從樂華夜市出發的 11 年職人冰品，每一口都吃得到用心與在地味。
+              <p className="text-white/50 text-sm leading-relaxed whitespace-pre-line">
+                {cms.description}
               </p>
             </div>
 
@@ -39,17 +52,17 @@ export default function Footer() {
               <h4 className="text-white font-semibold mb-4">聯絡我們</h4>
               <div className="space-y-3">
                 <a
-                  href="tel:02-29247461"
+                  href={`tel:${cms.phone}`}
                   className="flex items-center gap-3 text-white/50 hover:text-[hsl(var(--camel))] transition-colors duration-300"
                 >
                   <Phone className="w-4 h-4" />
-                  <span className="text-sm">02-29247461</span>
+                  <span className="text-sm">{cms.phone}</span>
                 </a>
                 <div className="flex items-start gap-3 text-white/50">
                   <MapPin className="w-4 h-4 mt-0.5" />
                   <div className="text-sm">
-                    <p>樂華總店：新北市永和區保平路18巷1號</p>
-                    <p className="mt-1">興南店：新北市中和區信義街7號（14:30-22:00）</p>
+                    <p>{cms.mainStoreAddress}</p>
+                    <p className="mt-1">{cms.branchAddress}</p>
                   </div>
                 </div>
               </div>
@@ -60,7 +73,7 @@ export default function Footer() {
               <h4 className="text-white font-semibold mb-4">追蹤我們</h4>
               <div className="flex gap-4">
                 <a
-                  href="https://www.facebook.com/YBATARO"
+                  href={cms.facebookUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/60 hover:bg-[hsl(var(--camel))] hover:text-white transition-all duration-300"
@@ -69,7 +82,7 @@ export default function Footer() {
                   <Facebook className="w-5 h-5" />
                 </a>
                 <a
-                  href="https://www.instagram.com/yba_taro"
+                  href={cms.instagramUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/60 hover:bg-[hsl(var(--camel))] hover:text-white transition-all duration-300"
@@ -79,7 +92,7 @@ export default function Footer() {
                 </a>
               </div>
               <p className="mt-4 text-white/30 text-sm">
-                營業時間：每日 15:30 - 23:00
+                {cms.hours}
               </p>
             </div>
           </div>

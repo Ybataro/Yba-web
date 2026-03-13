@@ -2,9 +2,22 @@ import { useEffect, useState } from 'react';
 import { Award, ChevronRight, Sprout } from 'lucide-react';
 import WaveDivider from '@/components/WaveDivider';
 import OrnamentalDivider from '@/components/OrnamentalDivider';
+import { useCmsContent } from '@/hooks/useCmsContent';
+
+const heroDefaults = {
+  badge: '2025 新北市必比登推薦',
+  title: '阿爸的芋圓',
+  subtitle: '永和樂華夜市 · 11 年職人冰品 · 100% 純甘蔗汁',
+  description: '獨創琥珀色蔗片冰，堅持自產、手作、無添加。',
+  descriptionLine2: '從夏夜吃到冬天的必比登美味。',
+  ctaPrimary: '立即選購',
+  ctaSecondary: '招牌菜單',
+  bgImage: '/images/Gemini_Generated_Image_pzb5nrpzb5nrpzb5.png',
+};
 
 export default function HeroDramatic() {
   const [isVisible, setIsVisible] = useState(false);
+  const { data: cms } = useCmsContent('hero', heroDefaults);
 
   useEffect(() => {
     setIsVisible(true);
@@ -14,7 +27,7 @@ export default function HeroDramatic() {
     <section className="relative h-screen min-h-[600px] w-full overflow-hidden">
       {/* 全螢幕背景圖 */}
       <img
-        src="/images/Gemini_Generated_Image_pzb5nrpzb5nrpzb5.png"
+        src={cms.bgImage}
         alt="阿爸的芋圓 — 碗裝冰品與天然食材"
         className="absolute inset-0 w-full h-full object-cover"
       />
@@ -36,7 +49,7 @@ export default function HeroDramatic() {
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full">
               <Award className="w-4 h-4 text-[hsl(var(--amber))]" />
               <span className="text-white/90 text-sm font-semibold tracking-wide">
-                2025 新北市必比登推薦
+                {cms.badge}
               </span>
             </div>
           </div>
@@ -48,7 +61,7 @@ export default function HeroDramatic() {
             }`}
           >
             <span className="block text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-tight">
-              阿爸的芋圓
+              {cms.title}
             </span>
           </h1>
 
@@ -63,7 +76,7 @@ export default function HeroDramatic() {
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            永和樂華夜市 · 11 年職人冰品 · 100% 純甘蔗汁
+            {cms.subtitle}
           </p>
 
           {/* 描述 */}
@@ -72,8 +85,8 @@ export default function HeroDramatic() {
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            獨創琥珀色蔗片冰，堅持自產、手作、無添加。<br className="hidden sm:block" />
-            從夏夜吃到冬天的必比登美味。
+            {cms.description}<br className="hidden sm:block" />
+            {cms.descriptionLine2}
           </p>
 
           {/* CTA */}
@@ -91,7 +104,7 @@ export default function HeroDramatic() {
               className="group px-8 py-4 bg-[hsl(var(--amber))] text-white font-bold rounded-full hover:bg-[hsl(var(--amber-dark))] transition-all duration-300 hover:scale-105 shadow-lg glow-amber inline-flex items-center justify-center gap-2"
             >
               <Sprout className="w-4 h-4" />
-              立即選購
+              {cms.ctaPrimary}
               <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
             <a
@@ -102,7 +115,7 @@ export default function HeroDramatic() {
               }}
               className="px-8 py-4 border-2 border-white/30 text-white font-bold rounded-full hover:bg-white/10 transition-all duration-300 hover:scale-105 inline-flex items-center justify-center"
             >
-              招牌菜單
+              {cms.ctaSecondary}
             </a>
           </div>
         </div>

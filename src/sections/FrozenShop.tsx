@@ -1,14 +1,27 @@
 import { useEffect, useRef, useState } from 'react';
 import { ShoppingCart, Package, Truck, Phone, Plus, Check, ArrowRight } from 'lucide-react';
 import WaveDivider from '@/components/WaveDivider';
+import { useCmsContent } from '@/hooks/useCmsContent';
 
 import { frozenProducts } from '@/data/frozenProducts';
 import { useFrozenCartStore } from '@/stores/frozenCartStore';
+
+const frozenShopDefaults = {
+  shippingFee: '運費 NT$150',
+  freeShipping: '滿 NT$1,600 免運',
+  deliveryTime: '接單後 3-5 個工作天',
+  deliveryNote: '冷凍宅配到府',
+  paymentMethods: 'ATM 轉帳',
+  paymentNote: '門市付款自取',
+  phoneOrderText: '電話訂購：0920-248-012',
+  phoneOrderNumber: '0920248012',
+};
 
 export default function FrozenShop() {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>('全部');
+  const { data: cms } = useCmsContent('frozen_shop', frozenShopDefaults);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -164,8 +177,8 @@ export default function FrozenShop() {
               </div>
               <h4 className="font-bold text-white mb-2">運費說明</h4>
               <p className="text-white/50 text-sm">
-                運費 NT$150<br />
-                <span className="text-[hsl(var(--amber-light))] font-medium">滿 NT$1,600 免運</span>
+                {cms.shippingFee}<br />
+                <span className="text-[hsl(var(--amber-light))] font-medium">{cms.freeShipping}</span>
               </p>
             </div>
 
@@ -175,8 +188,8 @@ export default function FrozenShop() {
               </div>
               <h4 className="font-bold text-white mb-2">出貨時間</h4>
               <p className="text-white/50 text-sm">
-                接單後 3-5 個工作天<br />
-                冷凍宅配到府
+                {cms.deliveryTime}<br />
+                {cms.deliveryNote}
               </p>
             </div>
 
@@ -186,8 +199,8 @@ export default function FrozenShop() {
               </div>
               <h4 className="font-bold text-white mb-2">付款方式</h4>
               <p className="text-white/50 text-sm">
-                ATM 轉帳<br />
-                門市付款自取
+                {cms.paymentMethods}<br />
+                {cms.paymentNote}
               </p>
             </div>
           </div>
@@ -217,11 +230,11 @@ export default function FrozenShop() {
             )}
 
             <a
-              href="tel:0920248012"
+              href={`tel:${cms.phoneOrderNumber}`}
               className="px-8 py-4 border-2 border-white/20 text-white font-bold rounded-full hover:bg-white/10 transition-all duration-300 flex items-center justify-center gap-2"
             >
               <Phone className="w-5 h-5" />
-              電話訂購：0920-248-012
+              {cms.phoneOrderText}
             </a>
           </div>
         </div>
