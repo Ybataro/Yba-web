@@ -44,10 +44,30 @@ const sectionDefaults: Record<string, Record<string, unknown>> = {
       { title: '自磨醇香雙漿', subtitle: '花生 x 黑芝麻', description: '濃郁黑芝麻與厚實花生醬，現磨現煮，淋在冰片上的瞬間，把香氣與食慾一起推到最高點。', image: '/images/芋泥花生蔗片冰_橫.JPG' },
     ],
     categories: [
-      { id: 'shaved-ice', name: '蔗片冰系列', description: '以 100% 天然甘蔗汁製成的琥珀色蔗片冰，是 11 年來的靈魂基底。' },
-      { id: 'taro', name: '芋圓系列', description: '每日手工現做，Q彈有嚼勁' },
-      { id: 'tofu', name: '豆花系列', description: '傳統手工豆花，香滑細嫩' },
-      { id: 'healthy', name: '養身系列', description: '健康養生，溫潤滋補' },
+      { id: 'shaved-ice', name: '蔗片冰系列', description: '以 100% 天然甘蔗汁製成的琥珀色蔗片冰，是 11 年來的靈魂基底。', items: [
+        { name: '招牌芋見泥蔗片冰', price: '145', desc: '芋泥球、芋圓、白玉湯圓' },
+        { name: '芋泥相遇蔗片冰', price: '125', desc: '芋泥球、芋圓、白玉湯圓' },
+        { name: '花生冰淇淋蔗片冰', price: '150', desc: '花生冰淇淋、芋圓、白玉湯圓' },
+        { name: '3Q芋泥蔗片冰', price: '120', desc: '芋圓、白玉湯圓、芋泥漿' },
+      ]},
+      { id: 'taro', name: '芋圓系列', description: '每日手工現做，Q彈有嚼勁', items: [
+        { name: '芋圓綜合湯', price: '70', desc: '芋圓、粉圓、小薏仁' },
+        { name: '白玉綜合湯', price: '70', desc: '白玉湯圓、紅豆、小薏仁' },
+        { name: '嫩仙草芋圓豆花', price: '70', desc: '嫩仙草、芋圓、豆花' },
+        { name: '芋圓豆漿豆花', price: '75', desc: '芋圓、小薏仁、濃醇豆漿' },
+      ]},
+      { id: 'tofu', name: '豆花系列', description: '傳統手工豆花，香滑細嫩', items: [
+        { name: '花生豆花', price: '55', desc: '花生、豆花' },
+        { name: '粉圓豆花', price: '55', desc: '粉圓、豆花' },
+        { name: '3Q豆花', price: '80', desc: '芋圓、白玉湯圓、粉圓' },
+        { name: '私藏杏仁茶豆花', price: '105', desc: '杏仁茶、芋圓、白玉湯圓' },
+      ]},
+      { id: 'healthy', name: '養身系列', description: '健康養生，溫潤滋補', items: [
+        { name: '養身銀耳湯', price: '60', desc: '紅棗冰糖銀耳' },
+        { name: '嫩仙草銀耳湯', price: '75', desc: '嫩仙草、紅棗冰糖銀耳' },
+        { name: '花生紅豆薏仁湯', price: '65', desc: '花生、紅豆、薏仁' },
+        { name: '芋圓紅豆薏仁湯', price: '75', desc: '芋圓、紅豆、薏仁' },
+      ]},
     ],
   },
   frozen_shop: {
@@ -172,6 +192,16 @@ const sectionDefs: { section: string; label: string; fields: FieldDef[] }[] = [
           { key: 'id', label: 'ID', type: 'text' },
           { key: 'name', label: '分類名', type: 'text' },
           { key: 'description', label: '分類描述', type: 'text' },
+          {
+            key: 'items',
+            label: '品項',
+            type: 'array',
+            arrayFields: [
+              { key: 'name', label: '品名', type: 'text' },
+              { key: 'price', label: '價格', type: 'text' },
+              { key: 'desc', label: '描述', type: 'text' },
+            ],
+          },
         ],
       },
     ],
@@ -375,6 +405,75 @@ function ImageField({
   );
 }
 
+// ===== 巢狀陣列欄位（分類 → 品項）=====
+function NestedArrayField({
+  label,
+  subFields,
+  items,
+  onChange,
+}: {
+  label: string;
+  subFields: FieldDef[];
+  items: Record<string, unknown>[];
+  onChange: (items: Record<string, unknown>[]) => void;
+}) {
+  const addItem = () => {
+    const newItem: Record<string, unknown> = {};
+    subFields.forEach((sf) => { newItem[sf.key] = ''; });
+    onChange([...items, newItem]);
+  };
+
+  const removeItem = (index: number) => {
+    onChange(items.filter((_, i) => i !== index));
+  };
+
+  const updateItem = (index: number, key: string, value: unknown) => {
+    const next = [...items];
+    next[index] = { ...next[index], [key]: value };
+    onChange(next);
+  };
+
+  return (
+    <div className="mt-2">
+      <div className="flex items-center justify-between mb-2">
+        <label className="text-white/50 text-xs font-medium">{label}</label>
+        <button
+          onClick={addItem}
+          className="text-[10px] px-2 py-0.5 bg-white/10 text-white/60 rounded hover:bg-white/15 transition-colors"
+        >
+          + 新增{label}
+        </button>
+      </div>
+      <div className="space-y-2">
+        {items.map((item, idx) => (
+          <div key={idx} className="flex items-start gap-2 p-2.5 rounded-lg bg-white/[0.03] border border-white/[0.06]">
+            <div className="flex-1 flex gap-2 items-center">
+              {subFields.map((sf) => (
+                <input
+                  key={sf.key}
+                  type="text"
+                  value={(item[sf.key] as string) || ''}
+                  onChange={(e) => updateItem(idx, sf.key, e.target.value)}
+                  placeholder={sf.label}
+                  className={`px-2 py-1.5 bg-white/5 border border-white/10 rounded text-white text-xs placeholder:text-white/20 focus:outline-none focus:border-[hsl(var(--amber))]/50 ${
+                    sf.key === 'price' ? 'w-16 text-center flex-shrink-0' : 'flex-1 min-w-0'
+                  }`}
+                />
+              ))}
+            </div>
+            <button
+              onClick={() => removeItem(idx)}
+              className="mt-1.5 text-red-400/40 hover:text-red-400 transition-colors flex-shrink-0"
+            >
+              <Trash2 className="w-3 h-3" />
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // ===== 主管理介面 =====
 function CmsEditor() {
   const [allContent, setAllContent] = useState<Record<string, Record<string, unknown>>>({});
@@ -570,6 +669,14 @@ function CmsEditor() {
                                       className="w-full px-3 py-2 bg-white/5 border border-white/15 rounded-lg text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-[hsl(var(--amber))]/50 resize-y"
                                     />
                                   </div>
+                                ) : af.type === 'array' && af.arrayFields ? (
+                                  <NestedArrayField
+                                    key={af.key}
+                                    label={af.label}
+                                    subFields={af.arrayFields}
+                                    items={(Array.isArray(item[af.key]) ? item[af.key] : []) as Record<string, unknown>[]}
+                                    onChange={(newItems) => setArrayItem(def.section, field.key, idx, af.key, newItems)}
+                                  />
                                 ) : (
                                   <div key={af.key}>
                                     <label className="block text-white/60 text-sm mb-1.5">{af.label}</label>
