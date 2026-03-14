@@ -5,6 +5,94 @@ import { Lock, Save, LogOut, Upload, Trash2, ChevronDown, ChevronRight, Check, L
 const CMS_PIN = import.meta.env.VITE_CMS_PIN || '0000';
 const STORAGE_BUCKET = 'cms-images';
 
+// ===== Hardcoded 預設值（與各 section .tsx 同步）=====
+const sectionDefaults: Record<string, Record<string, unknown>> = {
+  hero: {
+    badge: '2025 新北市必比登推薦',
+    title: '阿爸的芋圓',
+    subtitle: '永和樂華夜市 · 11 年職人冰品 · 100% 純甘蔗汁',
+    description: '獨創琥珀色蔗片冰，堅持自產、手作、無添加。',
+    descriptionLine2: '從夏夜吃到冬天的必比登美味。',
+    ctaPrimary: '立即選購',
+    ctaSecondary: '招牌菜單',
+    bgImage: '/images/Gemini_Generated_Image_pzb5nrpzb5nrpzb5.png',
+  },
+  story: {
+    storyTitle: '用阿爸的堅持',
+    storyTitleHighlight: '做好每一碗冰',
+    storyQuote: '我們不賣自己不吃的東西。',
+    storyBody: '在樂華夜市的第 11 個年頭，我們從未忘記初心。為了這一碗甜點，堅持每天清晨親自研磨杏仁、慢火熬煮甘蔗汁，選用天然芋頭與本地食材，把最單純的味道留在碗裡。',
+    mainImage: '/images/Gemini_Generated_Image_jfomlmjfomlmjfom.png',
+    floatImage: '/images/Gemini_Generated_Image_mb81xpmb81xpmb81.png',
+    ctaText: '在家也能享受 — 冷凍宅配選購',
+    ctaSubtext: '榮獲必比登推薦，是對這份「在地精神」最好的肯定',
+    features: [
+      { title: '天然食材', description: '100% 天然甘蔗汁製成冰品，不添加任何人工色素與防腐劑' },
+      { title: '手工製作', description: '每日新鮮現做，傳承阿爸的手藝與堅持' },
+      { title: '安心品質', description: '嚴選優質原料，讓您吃得安心、放心' },
+    ],
+    stats: [
+      { number: '11', suffix: '年', label: '樂華夜市在地經營' },
+      { number: '100', suffix: '%', label: '純甘蔗汁製冰' },
+      { number: '1', suffix: '次', label: '必比登推薦' },
+    ],
+  },
+  products: {
+    signatureItems: [
+      { title: '琥珀色蔗片冰', subtitle: '11 年靈魂招牌', description: '非傳統水冰，用整根甘蔗壓榨後製冰再削片，入口清甜、透心涼，是樂華夜市的必吃經典。', image: '/images/3Q芋泥蔗片冰_橫.JPG' },
+      { title: '自家濃郁冰淇淋', subtitle: '400ml 杯裝', description: '花生、芝麻、草莓等口味皆為自家配方，紮實口感與蔗片冰一起入口，拍照打卡、口感都滿分。', image: '/images/taro-icecream.jpg' },
+      { title: '自磨醇香雙漿', subtitle: '花生 x 黑芝麻', description: '濃郁黑芝麻與厚實花生醬，現磨現煮，淋在冰片上的瞬間，把香氣與食慾一起推到最高點。', image: '/images/芋泥花生蔗片冰_橫.JPG' },
+    ],
+    categories: [
+      { id: 'shaved-ice', name: '蔗片冰系列', description: '以 100% 天然甘蔗汁製成的琥珀色蔗片冰，是 11 年來的靈魂基底。' },
+      { id: 'taro', name: '芋圓系列', description: '每日手工現做，Q彈有嚼勁' },
+      { id: 'tofu', name: '豆花系列', description: '傳統手工豆花，香滑細嫩' },
+      { id: 'healthy', name: '養身系列', description: '健康養生，溫潤滋補' },
+    ],
+  },
+  frozen_shop: {
+    shippingFee: '運費 NT$150',
+    freeShipping: '滿 NT$1,600 免運',
+    deliveryTime: '接單後 3-5 個工作天',
+    deliveryNote: '冷凍宅配到府',
+    paymentMethods: 'ATM 轉帳',
+    paymentNote: '門市付款自取',
+    phoneOrderText: '電話訂購：0920-248-012',
+    phoneOrderNumber: '0920248012',
+  },
+  social_proof: {
+    heroImage: '/images/Gemini_Generated_Image_tiqp26tiqp26tiqp.png',
+    testimonials: [
+      { source: 'Google 評論', content: '蔗片冰的口感超特別，清甜不膩，必比登實至名歸！', name: '在地老客人', rating: '5' },
+      { source: 'IG 美食部落客', content: '芋頭控必朝聖，黑芝麻漿濃郁到不行，配上蔗片冰完全停不下來。', name: '@taipei_foodie', rating: '5' },
+      { source: '夜市遊客', content: '本來只是路過排隊，吃完之後每次來樂華都一定繞過來一碗。', name: '週末逛夜市情侶', rating: '5' },
+    ],
+    promises: [
+      { text: '100% 天然食材' },
+      { text: '無人工添加物' },
+      { text: '必比登認證品質' },
+    ],
+  },
+  stores: {
+    stores: [
+      { name: '樂華總店', address: '新北市永和區保平路18巷1號', phone: '02-29247461', hours: '15:30 - 23:00', note: '永和樂華夜市商圈', image: '/images/store-logo.jpg' },
+      { name: '興南店', address: '新北市中和區信義街7號', phone: '02-29410128', hours: '14:30 - 22:00', note: '中和興南夜市商圈', image: '/images/store-sign.jpg' },
+    ],
+  },
+  footer: {
+    brandName: '阿爸的芋圓',
+    brandNameEn: 'YBA Taro Balls',
+    badge: '2025 新北市必比登推薦 · 永和樂華夜市',
+    description: '以 100% 純甘蔗汁製成琥珀色蔗片冰，搭配每日手作芋圓、芋泥與雙漿。\n從樂華夜市出發的 11 年職人冰品，每一口都吃得到用心與在地味。',
+    phone: '02-29247461',
+    mainStoreAddress: '樂華總店：新北市永和區保平路18巷1號',
+    branchAddress: '興南店：新北市中和區信義街7號（14:30-22:00）',
+    hours: '營業時間：每日 15:30 - 23:00',
+    facebookUrl: 'https://www.facebook.com/YBATARO',
+    instagramUrl: 'https://www.instagram.com/yba_taro',
+  },
+};
+
 // ===== Section 定義 =====
 interface FieldDef {
   key: string;
@@ -295,16 +383,22 @@ function CmsEditor() {
   const [saved, setSaved] = useState<string | null>(null);
   const [openSections, setOpenSections] = useState<Set<string>>(new Set(['hero']));
 
-  // 載入所有 section
+  // 載入所有 section（以 hardcoded defaults 為底，DB 值覆蓋）
   const loadAll = useCallback(async () => {
+    // 先用 defaults 填充
+    const map: Record<string, Record<string, unknown>> = {};
+    for (const [key, val] of Object.entries(sectionDefaults)) {
+      map[key] = structuredClone(val);
+    }
+    // DB 值覆蓋
     const { data } = await supabase.from('cms_content').select('section, content');
     if (data) {
-      const map: Record<string, Record<string, unknown>> = {};
       for (const row of data) {
-        map[row.section] = row.content as Record<string, unknown>;
+        const dbContent = row.content as Record<string, unknown>;
+        map[row.section] = { ...(map[row.section] || {}), ...dbContent };
       }
-      setAllContent(map);
     }
+    setAllContent(map);
     setLoading(false);
   }, []);
 
@@ -323,7 +417,10 @@ function CmsEditor() {
 
   const getArray = (section: string, key: string): Record<string, unknown>[] => {
     const arr = allContent[section]?.[key];
-    return Array.isArray(arr) ? arr : [];
+    if (Array.isArray(arr)) return arr;
+    // fallback to defaults
+    const def = sectionDefaults[section]?.[key];
+    return Array.isArray(def) ? (def as Record<string, unknown>[]) : [];
   };
 
   const setArrayItem = (section: string, key: string, index: number, field: string, value: unknown) => {
