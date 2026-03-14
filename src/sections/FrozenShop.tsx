@@ -3,7 +3,7 @@ import { ShoppingCart, Package, Truck, Phone, Plus, Check, ArrowRight } from 'lu
 import WaveDivider from '@/components/WaveDivider';
 import { useCmsContent } from '@/hooks/useCmsContent';
 
-import { frozenProducts } from '@/data/frozenProducts';
+import { frozenProducts as hardcodedProducts, type FrozenProduct } from '@/data/frozenProducts';
 import { useFrozenCartStore } from '@/stores/frozenCartStore';
 
 const frozenShopDefaults = {
@@ -15,6 +15,7 @@ const frozenShopDefaults = {
   paymentNote: '門市付款自取',
   phoneOrderText: '電話訂購：0920-248-012',
   phoneOrderNumber: '0920248012',
+  frozenProducts: hardcodedProducts as unknown as Record<string, unknown>[],
 };
 
 export default function FrozenShop() {
@@ -43,7 +44,21 @@ export default function FrozenShop() {
   const { addItem, totalItems, setCartOpen } = useFrozenCartStore();
   const [addedId, setAddedId] = useState<string | null>(null);
 
-  const categories = ['全部', '芋圓系列', '冰淇淋系列', '杏仁茶系列'];
+  // CMS 商品資料 → 轉成 FrozenProduct 格式
+  const cmsRaw = cms.frozenProducts as Record<string, unknown>[] | undefined;
+  const frozenProducts: FrozenProduct[] = (cmsRaw || hardcodedProducts).map((p) => ({
+    id: String(p.id || ''),
+    name: String(p.name || ''),
+    category: String(p.category || '') as FrozenProduct['category'],
+    spec: String(p.spec || ''),
+    price: Number(p.price) || 0,
+    image: String(p.image || ''),
+    description: String(p.description || ''),
+  }));
+
+  // 從商品資料動態取得分類
+  const categorySet = new Set(frozenProducts.map((p) => p.category));
+  const categories = ['全部', ...categorySet];
 
   const filteredProducts = selectedCategory === '全部'
     ? frozenProducts
