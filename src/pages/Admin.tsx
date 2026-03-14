@@ -165,8 +165,9 @@ const sectionDefs: { section: string; label: string; fields: FieldDef[] }[] = [
 
 // ===== 圖片上傳 =====
 async function uploadImage(file: File, path: string): Promise<string> {
-  const ext = file.name.split('.').pop();
-  const filePath = `${path}-${Date.now()}.${ext}`;
+  const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg';
+  const safePath = path.replace(/[^a-zA-Z0-9_-]/g, '_');
+  const filePath = `${safePath}-${Date.now()}.${ext}`;
   const { error } = await supabase.storage.from(STORAGE_BUCKET).upload(filePath, file, {
     cacheControl: '3600',
     upsert: true,
@@ -207,6 +208,7 @@ function PinLogin({ onSuccess }: { onSuccess: () => void }) {
           type="password"
           inputMode="numeric"
           maxLength={6}
+          autoComplete="one-time-code"
           value={pin}
           onChange={(e) => { setPin(e.target.value); setError(''); }}
           className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white text-center text-2xl tracking-[0.5em] placeholder:text-white/20 focus:outline-none focus:border-[hsl(var(--amber))] transition-colors"
