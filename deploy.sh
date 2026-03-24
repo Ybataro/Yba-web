@@ -11,7 +11,7 @@ echo ""
 # 1. Git push
 echo "📤 推送到 GitHub..."
 git add -A && git commit -m "deploy: $(date +%Y-%m-%d_%H:%M)" 2>/dev/null || echo "(無新變更需 commit)"
-git push origin main 2>/dev/null || echo "(已是最新)"
+git push origin master 2>/dev/null || echo "(已是最新)"
 echo ""
 
 # 2. Build
